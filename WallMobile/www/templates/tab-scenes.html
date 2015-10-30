@@ -1,0 +1,46 @@
+<ion-view view-title="Tim y Mar scenes">
+    <ion-content class="padding" on-swipe-left="nextTab()" on-swipe-right="previousTab()">
+        <ion-refresher on-refresh="doRefresh()"></ion-refresher>
+        <div ng-repeat="group in groups">
+            <ion-item class="item-stable" data-ng-click="toggleGroup(group)" data-ng-class="{active: isGroupShown(group)}">
+                <i class="icon" ng-class="isGroupShown(group) ? 'ion-minus' : 'ion-plus'"></i> {{group.name}}
+            </ion-item>
+            <ion-item class="item-accordion" data-ng-show="isGroupShown(group)">
+                <ul class="list">
+                    <li data-ng-repeat="item in group.items">
+                        <div class="item item-toggle" data-ng-if="item.isSwitch">
+                            {{item.name}}
+                            <label class="toggle toggle-assertive">
+                                <input type="checkbox" ng-model="item.checked" ng-change="sceneClick(item)">
+                                <div class="track">
+                                    <div class="handle"></div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="item range range-positive" data-ng-if="item.isRange">
+                            {{item.name}} &nbsp;
+                            <i class="icon ion-ios-sunny-outline"></i>
+                            <input type="range" name="range" ng-model="item.range" min="0" max="100" data-ng-change="rangeChange(item)">
+                            <i class="icon ion-ios-sunny"></i>
+                        </div>
+                    </li>
+                </ul>
+            </ion-item>
+        </div>
+        <ion-item class="item-stable" data-ng-click="toggleGroup(allLedsGroup)" data-ng-class="{active: isGroupShown(allLedsGroup)}">
+            <i class="icon" ng-class="isGroupShown(allLedsGroup) ? 'ion-minus' : 'ion-plus'"></i> {{allLedsGroup.name}}
+        </ion-item>
+        <ion-item class="item-accordion" data-ng-show="isGroupShown(allLedsGroup)">
+            <ul class="list">
+                <li data-ng-repeat="item in allLedsGroup.items">
+                    <div class="item range range-positive">
+                        {{item.name}} &nbsp;
+                        <i class="icon ion-ios-sunny-outline"></i>
+                        <input type="range" name="range" ng-model="item.range" min="0" max="100" data-ng-change="allLedsChange(item)">
+                        <i class="icon ion-ios-sunny"></i>
+                    </div>
+                </li>
+            </ul>
+        </ion-item>
+    </ion-content>
+</ion-view>

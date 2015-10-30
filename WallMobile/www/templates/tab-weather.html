@@ -1,0 +1,32 @@
+<ion-view view-title="Tim y Mar weather">
+    <ion-content on-swipe-left="nextTab()" on-swipe-right="previousTab()">
+        <ion-refresher on-refresh="doRefresh()"></ion-refresher>
+        <div class="list card" style="margin:0px;">
+            <div class="item item-divider">Temperature outside</div>
+            <div class="item item-body" style="margin:0px; padding:0px;">
+                <div class="row">
+                    <div class="col"><b>{{temperatureOutside.value}}</b></div>
+                    <div class="col">{{temperatureOutside.lastUpdate | date:'dd MMM HH:mm'}}</div>
+                </div>
+            </div>
+        </div>
+        <div class="list card" style="margin:0px; margin-top:5px;">
+            <div class="item item-divider">Temperature eyes</div>
+            <div class="item item-body" style="margin:0px; padding:0px;">
+                <div class="row" data-ng-repeat="eye in eyes">
+                    <div class="col">{{eye.name}}</div>
+                    <div class="col"><b>{{eye.temperature}}</b> at {{eye.lastUpdate | date:'dd MMM HH:mm'}}</div>
+                </div> 
+            </div>
+        </div>
+        <div class="list card" style="margin:0px; margin-top:5px;">
+            <div class="item item-divider">Other temperature sensors</div>
+            <div class="item item-body" style="margin:0px; padding:0px;">
+                <div class="row" data-ng-repeat="other in others">
+                    <div class="col">{{other.name}}</div>
+                    <div class="col"><b>{{other.temperature}}</b> - {{other.lastUpdate | date:'dd MMM HH:mm'}}</div>
+                </div> 
+            </div>
+        </div>
+    </ion-content>
+</ion-view>
