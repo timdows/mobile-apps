@@ -48,26 +48,6 @@ angular.module('wallmobile', ['ionic', 'chart.js', 'wallmobile.controllers'])
         }
     })
 
-    .state('tab.graphs', {
-        url: '/graphs',
-        views: {
-            'tab-graphs': {
-                templateUrl: 'templates/tab-graphs.html',
-                controller: 'GraphsCtrl'
-            }
-        }
-    })
-
-    .state('tab.heating', {
-        url: '/heating',
-        views: {
-            'tab-heating': {
-                templateUrl: 'templates/tab-heating.html',
-                controller: 'HeatingCtrl'
-            }
-        }
-    })
-
     .state('tab.scenes', {
         url: '/scenes',
         views: {
@@ -76,17 +56,8 @@ angular.module('wallmobile', ['ionic', 'chart.js', 'wallmobile.controllers'])
             controller: 'ScenesCtrl'
             }
         }
-        })
-
-  .state('tab.settings', {
-      url: '/settings',
-    views: {
-        'tab-settings': {
-            templateUrl: 'templates/tab-settings.html',
-        controller: 'SettingsCtrl'
-      }
-    }
-  });
+    })
+    ;
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/tab/weather');

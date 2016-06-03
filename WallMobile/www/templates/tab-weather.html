@@ -1,30 +1,34 @@
 <ion-view view-title="Tim y Mar weather">
     <ion-content on-swipe-left="nextTab()" on-swipe-right="previousTab()">
-        <ion-refresher on-refresh="doRefresh()"></ion-refresher>
+        <ion-refresher on-refresh="getTemperatureDevices()"></ion-refresher>
         <div class="list card" style="margin:0px;">
-            <div class="item item-divider">Temperature outside</div>
+            <div class="item item-avatar">
+<!--                <img ng-src="http://{{houseDBUrl}}/img/housedb_weather_outside.png"/>-->
+                <h2>Temperature outside</h2>
+                <p>Last update: {{temperatureOutside.lastUpdate | date:'dd MMM yyyy HH:mm'}}</p>
+            </div>
             <div class="item item-body" style="margin:0px; padding:0px;">
                 <div class="row">
-                    <div class="col"><b>{{temperatureOutside.value}}</b></div>
-                    <div class="col">{{temperatureOutside.lastUpdate | date:'dd MMM HH:mm'}}</div>
+                    <div class="col text-center">
+                        <h1 style="margin-top: 0px;">{{temperatureOutside.temperature}} &deg;C</h1>
+                        <h1>{{ clock | date:'dd-MMM HH:mm:ss'}}</h1>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="list card" style="margin:0px; margin-top:5px;">
-            <div class="item item-divider">Temperature eyes</div>
+            <div class="item item-divider">All temperature sensors</div>
             <div class="item item-body" style="margin:0px; padding:0px;">
-                <div class="row" data-ng-repeat="eye in eyes">
-                    <div class="col">{{eye.name}}</div>
-                    <div class="col"><b>{{eye.temperature}}</b> at {{eye.lastUpdate | date:'dd MMM HH:mm'}}</div>
-                </div> 
-            </div>
-        </div>
-        <div class="list card" style="margin:0px; margin-top:5px;">
-            <div class="item item-divider">Other temperature sensors</div>
-            <div class="item item-body" style="margin:0px; padding:0px;">
-                <div class="row" data-ng-repeat="other in others">
-                    <div class="col">{{other.name}}</div>
-                    <div class="col"><b>{{other.temperature}}</b> - {{other.lastUpdate | date:'dd MMM HH:mm'}}</div>
+                <div class="row" ng-repeat="temperatureDevice in temperatureDevices">
+                    <div class="col col-60">
+                        {{temperatureDevice.name}}
+                    </div>
+                    <div class="col col-20">
+                        <span style="font-size: smaller">{{temperatureDevice.lastUpdate | date:'dd MMM HH:mm'}}</span>
+                    </div>
+                    <div class="col col-20">
+                        <strong>{{temperatureDevice.temperature}}</strong>
+                    </div>
                 </div> 
             </div>
         </div>
