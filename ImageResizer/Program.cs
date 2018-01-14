@@ -1,37 +1,48 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
+using System.Linq;
 
 namespace ResizeImages
 {
-    class Program
+	class Program
     {
         static void Main(string[] args)
         {
             var encoder = ImageCodecInfo.GetImageEncoders().First(c => c.FormatID == ImageFormat.Jpeg.Guid);
             var encParams = new EncoderParameters() { Param = new[] { new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, 90L) } };
 
-            var files = Directory.GetFiles(@"C:\Users\Timdows\ownCloud\Fotos\2012 @ Camera", "*.jpg");
-            var current = 0;
-            foreach (var imagePath in files)
-            {
-                var fileName = Path.GetFileName(imagePath);
-                Console.WriteLine($"{current++}/{files.Length} - Processing {fileName}");
+			var directories = Directory.GetDirectories(@"C:\Users\tim\Desktop\PhotoWall");
+			var directoryIndex = 0;
+			foreach(var directory in directories)
+			{
+				directoryIndex++;
 
-                using (var image = Image.FromFile(imagePath))
-                using (var newImage = ScaleImage(image))
-                {
-                    newImage.Save(
-                        Path.Combine(@"C:\Users\Timdows\ownCloud\Fotos\test", fileName), 
-                        encoder, 
-                        encParams);
-                }
-            }
+				var files = Directory.GetFiles(directory, "*.jpg");
+				var fileIndex = 0;
+				foreach (var imagePath in files)
+				{
+					var fileName = Path.GetFileName(imagePath);
+					Console.WriteLine($"File {fileIndex++}/{files.Length} - Directory {directoryIndex}/{directories.Length} - Processing {fileName}");
+
+					var saveDirectory = Path.Combine(@"C:\Users\tim\Desktop\PhotoWall_small", new DirectoryInfo(directory).Name);
+					if (!Directory.Exists(saveDirectory))
+					{
+						Directory.CreateDirectory(saveDirectory);
+					}
+
+					using (var image = Image.FromFile(imagePath))
+					using (var newImage = ScaleImage(image))
+					{
+						newImage.Save(
+							Path.Combine(saveDirectory, fileName),
+							encoder,
+							encParams);
+					}
+				}
+			}
+            
         }
 
         public static Image ScaleImage(Image image)
